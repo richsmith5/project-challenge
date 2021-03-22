@@ -1,26 +1,27 @@
 class LikesController < ApplicationController
-before_action :find_dog
-before_action :find_like, only: [:destroy]
+  before_action :find_dog
+  before_action :find_like, only: [:destroy]
 
-def create
-  if already_liked?
-    flash[:notice] = "You Have Already Liked This Puppy"
-  else
-    @dog.likes.create(user_id: current_user.id)
+  def create
+    if already_liked?
+      flash[:notice] = 'You Have Already Liked This Puppy'
+    else
+      @dog.likes.create(user_id: current_user.id)
+    end
+    redirect_to dog_path(@dog)
   end
-  redirect_to dog_path(@dog)
-end
 
-def destroy
-  if !(already_liked?)
-    flash[:notice] = "Cannot unlike"
-  else
-    @like.destroy
+  def destroy
+    if !already_liked?
+      flash[:notice] = 'Cannot unlike'
+    else
+      @like.destroy
+    end
+    redirect_to dog_path(@dog)
   end
-  redirect_to dog_path(@dog)
-end
 
-private
+  private
+
   def find_dog
     @dog = Dog.find(params[:dog_id])
   end

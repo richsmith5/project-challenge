@@ -1,9 +1,8 @@
 require 'rails_helper'
 
-
 describe 'Dog resource', type: :feature do
-  let!(:user) {FactoryBot.create(:user)}
-  before {login_as user}
+  let!(:user) { FactoryBot.create(:user) }
+  before { login_as user }
 
   it 'can create a profile' do
     visit new_dog_path

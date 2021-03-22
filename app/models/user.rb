@@ -8,7 +8,6 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-# * Allow editing only by owner
-# * Allow users to like other dogs (not their own)
-
+  # * Allow editing only by owner
+  # * Allow users to like other dogs (not their own)
 end

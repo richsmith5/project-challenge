@@ -5,6 +5,6 @@ Rails.application.routes.draw do
   resources :dogs do
     resources :likes
   end
-  
-  root to: "dogs#index"
+
+  root to: 'dogs#index'
 end
