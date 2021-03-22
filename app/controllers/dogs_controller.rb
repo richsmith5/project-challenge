@@ -4,7 +4,7 @@ class DogsController < ApplicationController
   # GET /dogs
   # GET /dogs.json
   def index
-    @dogs = Dog.all
+    @dogs = Dog.page(params[:page])
   end
 
   # GET /dogs/1
@@ -24,7 +24,7 @@ class DogsController < ApplicationController
   # POST /dogs
   # POST /dogs.json
   def create
-    @dog = Dog.new(dog_params)
+    @dog = Dog.create!(dog_params)
 
     respond_to do |format|
       if @dog.save
@@ -73,6 +73,6 @@ class DogsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def dog_params
-      params.require(:dog).permit(:name, :description, :images)
+      params.require(:dog).permit(:name, :description, images: []).merge(user_id: current_user.id)
     end
 end

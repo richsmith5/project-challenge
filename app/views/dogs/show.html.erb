@@ -2,12 +2,38 @@
   <h2><%= @dog.name %></h2>
 
   <% @dog.images.each do |image| %>
-    <%= image_tag url_for(image), alt: "Photo of #{@dog.name}" %>
+    <%= image_tag url_for(image), size:"300x300", alt: "Photo of #{@dog.name}" %>
   <% end %>
 
   <p><%= @dog.description %></p>
+  <p><%= @dog.likes.count %> <%= (@dog.likes.count) == 1 ? 'Like' : 'Likes'%></p>
 
-  <%= link_to "Edit #{@dog.name}'s Profile", edit_dog_path %>
-  <br>
-  <%= link_to "Delete #{@dog.name}'s Profile", dog_path, method: :delete, data: { confirm: 'Are you sure?' } %>
+  <% user_unlike = @dog.likes.find { |like| like.user_id == current_user.id} %>
+  <% if user_unlike %>
+    <%= button_to 'Unlike', dog_like_path(@dog, user_unlike), method: :delete %>
+  <% else %>
+    <%= button_to 'Like', dog_likes_path(@dog), method: :post %>
+  <% end %>
+  <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+  <div class="carousel-inner">
+  <% @dog.images.each do |image| %>
+    <div class="carousel-item active">
+      <img class="d-block w-100" src="<%= image_tag url_for(image), size:"300x300" %>" alt="First slide">
+    </div>
+  <% end %>
+  </div>
+  <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>
+  <% if @dog.user_id == current_user.id %>
+    <%= link_to "Edit #{@dog.name}'s Profile", edit_dog_path %>
+    <br>
+    <%= link_to "Delete #{@dog.name}'s Profile", dog_path, method: :delete, data: { confirm: 'Are you sure?' } %>
+  <% end %>
 </section>

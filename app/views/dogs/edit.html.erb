@@ -1,2 +1,24 @@
 <h1>Edit Your Dog</h1>
-<%= render partial: 'form' %>
+<%= simple_form_for @dog do |f| %>
+    <div>
+        <%= f.input :name %>
+        <%= f.input :description, as: :text %>
+    </div>
+
+    <div>
+        <%= f.label :images, 'image' %>
+        <%= f.file_field :images, {multiple: true} %>
+    </div>
+
+    <% if @dog.images.present? %>
+        <p>PUPPY PICS</p>
+        <% @dog.images.each do |image| %>
+
+        <%= image_tag image, size:"100x100" %> <br>
+        <% end %>
+    <% end %>
+
+    <div>
+        <%= f.submit  'EDIT' %>
+    </div>
+  <% end %>
