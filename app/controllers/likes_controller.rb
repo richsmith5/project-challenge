@@ -6,7 +6,7 @@ class LikesController < ApplicationController
     if already_liked?
       flash[:notice] = 'You Have Already Liked This Puppy'
     else
-      @dog.likes.create(user_id: current_user.id)
+      @dog.likes.create(like_params)
     end
     redirect_to dog_path(@dog)
   end
@@ -33,5 +33,9 @@ class LikesController < ApplicationController
   def already_liked?
     Like.where(user_id: current_user.id, dog_id:
     params[:dog_id]).exists?
+  end
+
+  def like_params
+    params.permit(:user).merge(user_id: current_user.id)
   end
 end

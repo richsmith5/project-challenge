@@ -2,17 +2,19 @@
   <h2><%= @dog.name %></h2>
 
   <% @dog.images.each do |image| %>
-    <%= image_tag url_for(image), size:"300x300", alt: "Photo of #{@dog.name}" %>
+    <%= image_tag url_for(image), class: "dog-photo", alt: "Photo of #{@dog.name}" %>
   <% end %>
 
   <p><%= @dog.description %></p>
-  <p><%= @dog.likes.count %> <%= (@dog.likes.count) == 1 ? 'Like' : 'Likes'%></p>
+  <p><%= @dog.likes.count %> <%= "Like".pluralize(@dog.likes.count)%></p>
 
-  <% user_unlike = @dog.likes.find { |like| like.user_id == current_user.id} %>
-  <% if user_unlike %>
-    <%= button_to 'Unlike', dog_like_path(@dog, user_unlike), method: :delete %>
-  <% else %>
-    <%= button_to 'Like', dog_likes_path(@dog), method: :post %>
+  <% if @dog.user_id != current_user.id %>
+    <% user_has_liked = @dog.likes.find { |like| like.user == current_user} %>
+    <% if user_has_liked %>
+      <%= button_to 'Unlike', dog_like_path(@dog, user_has_liked), method: :delete %>
+    <% else %>
+      <%= button_to 'Like', dog_likes_path(@dog), method: :post %>
+    <% end %>
   <% end %>
 
   <% if @dog.user_id == current_user.id %>

@@ -19,3 +19,11 @@ header {
   display: flex;
   justify-content: space-between;
 }
+.dog-photo {
+  width: 300px;
+  height: 300px;
+}
+.uploaded-image {
+  width: 300px;
+  height: 300px;
+}

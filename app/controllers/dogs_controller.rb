@@ -22,7 +22,7 @@ class DogsController < ApplicationController
   # POST /dogs
   # POST /dogs.json
   def create
-    @dog = Dog.create!(dog_params)
+    @dog = Dog.new(dog_params)
 
     respond_to do |format|
       if @dog.save

@@ -3,7 +3,7 @@
 <% @dogs.each_with_index do |dogs, index| %>
  
     <%= render partial: "thumbnail", locals: {dog: dogs}%>
-    <p><%= dogs.likes.count %> <%= (dogs.likes.count) == 1 ? 'Like' : 'Likes'%></p>
+    <p><%= dogs.likes.count %> <%= "Like".pluralize(dogs.likes.count)%></p>
     <% if index.odd? %>
         <%= render partial: 'ad' %>
     <% end %>
